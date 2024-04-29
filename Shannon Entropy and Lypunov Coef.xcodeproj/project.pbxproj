@@ -14,6 +14,14 @@
 		332FF92D2BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF92C2BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefTests.swift */; };
 		332FF9372BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF9362BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefUITests.swift */; };
 		332FF9392BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF9382BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefUITestsLaunchTests.swift */; };
+		332FF9462BE03CDB0000445F /* CalculatePlotData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF9452BE03CDB0000445F /* CalculatePlotData.swift */; };
+		332FF9482BE03CF40000445F /* ChangingPlotParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF9472BE03CF40000445F /* ChangingPlotParameters.swift */; };
+		332FF94A2BE03D040000445F /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF9492BE03D040000445F /* Operators.swift */; };
+		332FF94C2BE03EC60000445F /* PlotClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF94B2BE03EC60000445F /* PlotClass.swift */; };
+		332FF94E2BE03EDA0000445F /* PlotDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF94D2BE03EDA0000445F /* PlotDataClass.swift */; };
+		332FF9502BE03EEB0000445F /* PlotDataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF94F2BE03EEB0000445F /* PlotDataStruct.swift */; };
+		332FF9522BE03EFE0000445F /* TextExportDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF9512BE03EFE0000445F /* TextExportDocument.swift */; };
+		332FF9542BE03F0D0000445F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332FF9532BE03F0D0000445F /* TextView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +53,14 @@
 		332FF9322BE03C910000445F /* Shannon Entropy and Lypunov CoefUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shannon Entropy and Lypunov CoefUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		332FF9362BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shannon_Entropy_and_Lypunov_CoefUITests.swift; sourceTree = "<group>"; };
 		332FF9382BE03C910000445F /* Shannon_Entropy_and_Lypunov_CoefUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shannon_Entropy_and_Lypunov_CoefUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		332FF9452BE03CDB0000445F /* CalculatePlotData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatePlotData.swift; sourceTree = "<group>"; };
+		332FF9472BE03CF40000445F /* ChangingPlotParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangingPlotParameters.swift; sourceTree = "<group>"; };
+		332FF9492BE03D040000445F /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		332FF94B2BE03EC60000445F /* PlotClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotClass.swift; sourceTree = "<group>"; };
+		332FF94D2BE03EDA0000445F /* PlotDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotDataClass.swift; sourceTree = "<group>"; };
+		332FF94F2BE03EEB0000445F /* PlotDataStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotDataStruct.swift; sourceTree = "<group>"; };
+		332FF9512BE03EFE0000445F /* TextExportDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextExportDocument.swift; sourceTree = "<group>"; };
+		332FF9532BE03F0D0000445F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +113,14 @@
 			children = (
 				332FF91A2BE03C8F0000445F /* Shannon_Entropy_and_Lypunov_CoefApp.swift */,
 				332FF91C2BE03C8F0000445F /* ContentView.swift */,
+				332FF9452BE03CDB0000445F /* CalculatePlotData.swift */,
+				332FF9472BE03CF40000445F /* ChangingPlotParameters.swift */,
+				332FF9492BE03D040000445F /* Operators.swift */,
+				332FF94B2BE03EC60000445F /* PlotClass.swift */,
+				332FF94D2BE03EDA0000445F /* PlotDataClass.swift */,
+				332FF94F2BE03EEB0000445F /* PlotDataStruct.swift */,
+				332FF9512BE03EFE0000445F /* TextExportDocument.swift */,
+				332FF9532BE03F0D0000445F /* TextView.swift */,
 				332FF91E2BE03C910000445F /* Assets.xcassets */,
 				332FF9202BE03C910000445F /* Shannon_Entropy_and_Lypunov_Coef.entitlements */,
 				332FF9212BE03C910000445F /* Preview Content */,
@@ -260,7 +284,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				332FF91D2BE03C8F0000445F /* ContentView.swift in Sources */,
+				332FF94A2BE03D040000445F /* Operators.swift in Sources */,
+				332FF9482BE03CF40000445F /* ChangingPlotParameters.swift in Sources */,
+				332FF9462BE03CDB0000445F /* CalculatePlotData.swift in Sources */,
+				332FF94E2BE03EDA0000445F /* PlotDataClass.swift in Sources */,
+				332FF9502BE03EEB0000445F /* PlotDataStruct.swift in Sources */,
+				332FF9522BE03EFE0000445F /* TextExportDocument.swift in Sources */,
 				332FF91B2BE03C8F0000445F /* Shannon_Entropy_and_Lypunov_CoefApp.swift in Sources */,
+				332FF94C2BE03EC60000445F /* PlotClass.swift in Sources */,
+				332FF9542BE03F0D0000445F /* TextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
