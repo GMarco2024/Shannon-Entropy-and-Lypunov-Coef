@@ -78,7 +78,7 @@ struct ContentView: View {
     func calculateLyapunovExponents() async {
         let results = LyapunovCalc.calculateLyapunov()  // Call the static method correctly
         await MainActor.run {
-            // Ensuring all UI updates are handled in the main thread
+  
             updatePlotDataWithLyapunovResults(results: results)
         }
     }
