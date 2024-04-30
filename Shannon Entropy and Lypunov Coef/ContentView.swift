@@ -1,22 +1,11 @@
-//
-//  ContentView.swift
-// 
-//
-//  Created by Jeff_Terry on 1/15/24.
-//  Modified by Marco Gonzalez 04/29/24
-//
-//
-//
-
 import SwiftUI
 import Charts
 
 struct ContentView: View {
-    @Environment(PlotClass.self) var plotData
-    
+    @EnvironmentObject var plotData: PlotClass
     @State private var shannonCalculator = ShannonCalc()
     @State private var selector = 0
-    
+
     var body: some View {
         VStack {
             Group {
@@ -25,7 +14,7 @@ struct ContentView: View {
                         .rotationEffect(Angle(degrees: -90))
                         .foregroundColor(.red)
                         .padding()
-                    
+
                     VStack {
                         Chart(plotData.plotArray[selector].plotData) {
                             LineMark(
@@ -55,14 +44,20 @@ struct ContentView: View {
                 .frame(alignment: .center)
                 .padding()
             }
-            
+
             Divider()
 
             HStack {
                 Button("Plot Shannon Entropy", action: {
                     Task {
-                        self.selector = 0
-                        await self.calculateShannonEntropy()
+                        await calculateShannonEntropy()
+                    }
+                })
+                .padding()
+
+                Button("Plot Lyapunov Exponents", action: {
+                    Task {
+                        await calculateLyapunovExponents()
                     }
                 })
                 .padding()
@@ -74,13 +69,34 @@ struct ContentView: View {
     func calculateShannonEntropy() async {
         let results = shannonCalculator.calculateShannon()
         await MainActor.run {
-            // Assuming the format of results is appropriate, adjust if necessary
-            plotData.plotArray[selector].plotData = results.map { PlotDataStruct(xVal: $0.mu, yVal: $0.entropy) }
-            plotData.plotArray[selector].calculatedText = results.map { "mu: \($0.mu), entropy: \($0.entropy)" }.joined(separator: "\n")
+            // Ensuring all UI updates are handled in the main thread
+            updatePlotDataWithShannonResults(results: results)
         }
+    }
+
+    /// Calculates Lyapunov exponents and updates the plot data model and text output
+    func calculateLyapunovExponents() async {
+        let results = LyapunovCalc.calculateLyapunov()  // Call the static method correctly
+        await MainActor.run {
+            // Ensuring all UI updates are handled in the main thread
+            updatePlotDataWithLyapunovResults(results: results)
+        }
+    }
+
+    // Helper methods to update plot data
+    @MainActor private func updatePlotDataWithShannonResults(results: [(mu: Double, entropy: Double)]) {
+        plotData.plotArray[selector].plotData = results.map { PlotDataStruct(xVal: $0.mu, yVal: $0.entropy) }
+        plotData.plotArray[selector].calculatedText = results.map { "mu: \($0.mu), entropy: \($0.entropy)" }.joined(separator: "\n")
+    }
+
+    @MainActor private func updatePlotDataWithLyapunovResults(results: [(Double, Double, Double)]) {
+        plotData.plotArray[selector].plotData = results.map { PlotDataStruct(xVal: $0.0, yVal: $0.2) }
+        plotData.plotArray[selector].calculatedText = results.map { "m: \($0.0), y: \($0.1), Lyapunov: \($0.2)" }.joined(separator: "\n")
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView().environmentObject(PlotClass())
+    }
 }

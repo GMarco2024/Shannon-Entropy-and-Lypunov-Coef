@@ -67,7 +67,7 @@ import Observation
         plotDataModel!.calculatedText += theText
     }
 
-    // New Lyapunov calculation function
+
     func calculateLyapunovExponents() async {
         let lyapunovResults = LyapunovCalc.calculateLyapunov()
         var plotData: [(x: Double, y: Double)] = []

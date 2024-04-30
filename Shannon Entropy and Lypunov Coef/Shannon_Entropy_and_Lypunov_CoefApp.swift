@@ -5,28 +5,26 @@
 //  Modified by Marco Gonzalez
 
 import SwiftUI
-import Observation
 
 @main
 struct Shannon_Entropy_and_Lypunov_CoefApp: App {
-    
-    @State var plotData = PlotClass()
-    
+    @StateObject var plotData = PlotClass()
+
     var body: some Scene {
         WindowGroup {
             TabView {
                 ContentView()
-                    .environment(plotData)
+                    .environmentObject(plotData)
                     .tabItem {
-                        Text("Plot")
+                        Label("Plot", systemImage: "chart.xyaxis.line")
                     }
                 TextView()
-                    .environment(plotData)
+                    .environmentObject(plotData)
                     .tabItem {
-                        Text("Text")
-                        
-                }
+                        Label("Text", systemImage: "text.alignleft")
+                    }
             }
         }
     }
 }
+

@@ -1,103 +1,80 @@
-//
-//  TextView.swift
-//  Tab for Displaying and saving text
-//
-//  Created by Jeff Terry on 8/25/22.
-//  Modified by Marco Gonzalez 04/29/2024
-//
-
 import SwiftUI
 import UniformTypeIdentifiers
 
 struct TextView: View {
-    
-    @Environment(PlotClass.self) var plotData
-    
-    @State var document: TextExportDocument = TextExportDocument(message: "")
+    @EnvironmentObject var plotData: PlotClass  // Assumes plotData is injected from the parent view
+    @State private var document: TextExportDocument = TextExportDocument(message: "")
     @State private var isImporting: Bool = false
     @State private var isExporting: Bool = false
-    
-    @State var textSelectorString = "0"
-    @State var textSelector = 0
-    
+    @State private var textSelector = 0  // Adjust this based on how you decide which data to show
+
     var body: some View {
-        
-        @Bindable var plotData = plotData
-        
-        VStack{
-            TextEditor(text: $plotData.plotArray[textSelector].calculatedText )
-            
-            HStack{
-                
+        VStack {
+            TextEditor(text: $plotData.plotArray[textSelector].calculatedText)
+                .padding()
+                .border(Color.gray, width: 1)  // Adding a border for clarity
+
+            HStack {
                 Button("Save", action: {
-                    isExporting = false
-                    document.message = plotData.plotArray[textSelector].calculatedText
-                    //fix broken picker sheet
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        isExporting = true
-                    }
-                    
+                    saveText()
                 })
                 .padding()
+
                 Button("Load", action: {
-                    isImporting = false
-                    
-                    //fix broken picker sheet
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        isImporting = true
-                    }
+                    loadText()
                 })
                 .padding()
-                
             }
         }
-        
-        .padding()
         .fileImporter(
             isPresented: $isImporting,
             allowedContentTypes: [UTType.plainText],
             allowsMultipleSelection: false
         ) { result in
-            do {
-                guard let selectedFile: URL = try result.get().first else { return }
-                
-                //trying to get access to url contents
-                if (CFURLStartAccessingSecurityScopedResource(selectedFile as CFURL)) {
-                    
-
-                    guard let message = String(data: try Data(contentsOf: selectedFile), encoding: .utf8) else { return }
-                    
-                    document.message = message
-                    
-                    plotData.plotArray[0].calculatedText = message
-                    
-                    //done accessing the url
-                    CFURLStopAccessingSecurityScopedResource(selectedFile as CFURL)
-                }
-                else {
-                    print("Permission error!")
-                }
-            } catch {
-                // Handle failure.
-                print(error.localizedDescription)
-            }
+            handleImport(result: result)
         }
         .fileExporter(
             isPresented: $isExporting,
             document: document,
             contentType: UTType.plainText,
-            defaultFilename: "RawData"
+            defaultFilename: "ExportedData"
         ) { result in
             if case .success = result {
-                // Handle success.
+                print("File saved successfully.")
             } else {
-                // Handle failure.
+                print("Failed to save file.")
             }
+        }
+        .padding()
+    }
+
+    private func saveText() {
+        document.message = plotData.plotArray[textSelector].calculatedText
+        isExporting = true
+    }
+
+    private func loadText() {
+        isImporting = true
+    }
+
+    private func handleImport(result: Result<[URL], Error>) {
+        do {
+            guard let selectedFile = try result.get().first else { return }
+            if CFURLStartAccessingSecurityScopedResource(selectedFile as CFURL) {
+                let message = try String(contentsOf: selectedFile, encoding: .utf8)
+                plotData.plotArray[textSelector].calculatedText = message
+                CFURLStopAccessingSecurityScopedResource(selectedFile as CFURL)
+            } else {
+                print("Permission error!")
+            }
+        } catch {
+            print("Failed to load the file: \(error.localizedDescription)")
         }
     }
 }
 
-#Preview {
-    TextView()
+struct TextView_Previews: PreviewProvider {
+    static var previews: some View {
+        TextView().environmentObject(PlotClass())
+    }
 }
-
