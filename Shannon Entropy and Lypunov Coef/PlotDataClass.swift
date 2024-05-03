@@ -12,18 +12,19 @@ import Observation
 
 @Observable class PlotDataClass {
     
+    // Holds the actual plot data points as an array of PlotDataStruct.
     @MainActor var plotData = [PlotDataStruct]()
+    // Manages settings for plot appearance such as axis labels, limits, and colors.
     @MainActor var changingPlotParameters: ChangingPlotParameters = ChangingPlotParameters()
+    // This holds text that used for calculation
     @MainActor var calculatedText = ""
-    //In case you want to plot vs point number
+    // This tracks the number of points plotted.
     @MainActor var pointNumber = 1.0
     
     init(fromLine line: Bool) {
         
         
-        //Must call super init before initializing plot
-        //super.init()
-       
+     
         Task{
             //Intitialize the first plot
             await self.plotBlank()

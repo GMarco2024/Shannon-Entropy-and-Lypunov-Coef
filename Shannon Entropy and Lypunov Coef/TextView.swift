@@ -1,8 +1,12 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+// SwiftUI view that displays text data from plot calculations
 struct TextView: View {
+    
+// Environment object to access shared data throughout the app
     @EnvironmentObject var plotData: PlotClass
+// State variable to track which text data to display
     @State private var textSelector = 0
 
     var body: some View {
@@ -14,7 +18,9 @@ struct TextView: View {
         .padding()
     }
 
+    // Function to format the text data for better readability
     func formatText(text: String) -> String {
+    // Split the input text into lines
         let lines = text.split(separator: "\n")
         guard !lines.isEmpty else { return "" }
 
@@ -24,6 +30,7 @@ struct TextView: View {
 
         for line in lines {
             let values = line.split(separator: ",").map { $0.split(separator: ":")[1].trimmingCharacters(in: .whitespaces) }
+            // Join the values with commas and add to the formatted lines
             formattedLines.append(values.joined(separator: ", "))
         }
 
