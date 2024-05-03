@@ -9,12 +9,15 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Group {
+                
+                // Rotates the Y-axis label by -90 degrees.
                 HStack(alignment: .center, spacing: 0) {
                     Text(plotData.plotArray[selector].changingPlotParameters.yLabel)
                         .rotationEffect(Angle(degrees: -90))
                         .foregroundColor(.red)
                         .padding()
-
+                    
+                // Renders a chart with line marks using the plot data.
                     VStack {
                         Chart(plotData.plotArray[selector].plotData) {
                             LineMark(
@@ -37,6 +40,8 @@ struct ContentView: View {
                             AxisMarks(position: .leading)
                         }
                         .padding()
+                        
+                        // Displays the X-axis label.
                         Text(plotData.plotArray[selector].changingPlotParameters.xLabel)
                             .foregroundColor(.red)
                     }
@@ -46,7 +51,8 @@ struct ContentView: View {
             }
 
             Divider()
-
+            
+            // Button to trigger the Shannon Entropy plotting.
             HStack {
                 Button("Plot Shannon Entropy", action: {
                     Task {
@@ -54,7 +60,8 @@ struct ContentView: View {
                     }
                 })
                 .padding()
-
+                
+                // Button to trigger the Lyapunov plotting.
                 Button("Plot Lyapunov Exponents", action: {
                     Task {
                         await calculateLyapunovExponents()
@@ -76,14 +83,16 @@ struct ContentView: View {
 
     /// Calculates Lyapunov exponents and updates the plot data model and text output
     func calculateLyapunovExponents() async {
-        let results = LyapunovCalc.calculateLyapunov()  // Call the static method correctly
+        
+        // Call the static method correctly
+        let results = LyapunovCalc.calculateLyapunov()
         await MainActor.run {
   
             updatePlotDataWithLyapunovResults(results: results)
         }
     }
 
-    // Helper methods to update plot data
+    // Methods to update plot data
     @MainActor private func updatePlotDataWithShannonResults(results: [(mu: Double, entropy: Double)]) {
         plotData.plotArray[selector].plotData = results.map { PlotDataStruct(xVal: $0.mu, yVal: $0.entropy) }
         plotData.plotArray[selector].calculatedText = results.map { "mu: \($0.mu), entropy: \($0.entropy)" }.joined(separator: "\n")
